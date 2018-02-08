@@ -1,5 +1,12 @@
 # Express Generator with Vue-CLI
 
+使われたフレームワーク、ライブラリー
+```
+vueJs
+vue-Cli
+vuetify
+Nodejs
+```
 
 開発する時
 ```
