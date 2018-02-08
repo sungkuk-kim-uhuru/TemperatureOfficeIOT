@@ -1,13 +1,24 @@
 # Express Generator with Vue-CLI
 
+
+開発する時
 ```
-git clone https://github.com/ChangJoo-Park/express-generator-with-vue-cli sample-app
-cd sample-app
+git clone https://github.com/sungkuk-kim-uhuru/TemperatureOfficeIOT.git
 cd backend 
 npm install 
-cd ..
 cd frontend
 npm install
+npm run dev
+```
+
+運営する時
+```
+git clone https://github.com/sungkuk-kim-uhuru/TemperatureOfficeIOT.git
+cd backend 
+npm install 
+cd frontend
+npm install
+npm run build
 cd ..
-npm start
+node app.js
 ```
