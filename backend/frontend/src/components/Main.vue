@@ -8,7 +8,6 @@
                    <span class="text" >{{item.value}}<span class="miniFont">℃</span></span>
                </div>
            </div>
-           <v-slider prepend-icon="volume_up" v-model="media"></v-slider>
        </div>
     </div>
 </template>
