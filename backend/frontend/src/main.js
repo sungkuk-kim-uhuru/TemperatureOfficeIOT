@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import Main from './components/Main.vue'
 import Vuetify from 'vuetify'
+import axios from 'axios'
 
+var app = undefined;
 Vue.use(Vuetify);
 Vue.component('Main', Main);
-var app = undefined;
+Vue.prototype.$http = axios;
 app = new Vue({
   el: '#app',
   render: h => h(Main)

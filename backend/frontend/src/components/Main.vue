@@ -1,9 +1,9 @@
 
 <template>
    <div id="main" >
-       <div class="backgroundDiv widthMode">
-           <img src="../assets/bg.png" class="" alt="">
-           <div class="circle " v-for="(item, index) in datas" v-bind:class="['position' + index,datas[index].color]">
+       <div class="backgroundDiv widthMode" >
+           <img src="../assets/bg.png">
+           <div class="circle " v-for="(item, index) in datas" v-bind:key="index" v-bind:class="['position' + index,datas[index].color]">
                <div class="textDiv">
                    <span class="text" >{{item.value}}<span class="miniFont">℃</span></span>
                </div>
@@ -89,25 +89,40 @@ export default {
   },
   beforeMount () {
     var thisObj = this;
-    this.changeColor();
+    this.callAjax();
     setInterval(function() {
-      thisObj.changeColor();
+      thisObj.callAjax();
     }, 3000);
   },
   updated() {
     console.log('updated');
   },
   methods:{
-    changeColor:function(){
-      this.datas.forEach(function(item,index){
-        if(index != 0){
-          var randomTemperature = Math.floor(Math.random() * 7) + 20;
-          var randomTemperature2 = Math.floor(Math.random() * 10) + 1;
-          var color = randomTemperature < 22 ?  'circle-blue' : (randomTemperature < 24 ? 'circle-green' : 'circle-red');
-          item.value = randomTemperature+'.'+(randomTemperature2>5?5:0);
-          item.color = color;
-        }
-      });
+    changeColor:function(index, data){
+      // this.datas.forEach(function(item,index){
+      //   if(index != 0){
+      //     var randomTemperature = Math.floor(Math.random() * 7) + 20;
+      //     var randomTemperature2 = Math.floor(Math.random() * 10) + 1;
+      //     var color = randomTemperature < 22 ?  'circle-blue' : (randomTemperature < 24 ? 'circle-green' : 'circle-red');
+      //     item.value = randomTemperature+'.'+(randomTemperature2>5?5:0);
+      //     item.color = color;
+      //   }
+      // });
+      let temperature = data.temp;
+      let color = temperature < 22 ?  'circle-blue' : (temperature < 24 ? 'circle-green' : 'circle-red');
+      this.datas[index].color = color;
+      this.datas[index].value = temperature;
+    },
+    callAjax () {
+      const baseURI = 'https://kytz6k74cl.execute-api.us-east-1.amazonaws.com/tempapi/tempdata';
+      this.$http.get(`${baseURI}`)
+      .then((result) => {
+        console.log(result);
+        let resData = result.data.body;
+        console.log(resData);
+        this.changeColor(1,resData[1]);
+      })
+
     }
   },
   conponents:{
