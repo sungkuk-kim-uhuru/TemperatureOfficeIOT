@@ -1,13 +1,22 @@
 
 <template>
    <div id="main" >
+   
        <div class="backgroundDiv widthMode" >
-           <img src="../assets/bg.png">
-           <div class="circle " v-for="(item, index) in datas" v-bind:key="index" v-bind:class="['position' + index,datas[index].color]">
-               <div class="textDiv">
-                   <span class="text" >{{item.value}}<span class="miniFont">℃</span></span>
-               </div>
-           </div>
+          <img src="../assets/bg.png">
+          <div class="block">
+            <span class="demonstration">スライダー</span>
+            <el-slider v-model="value1"></el-slider>
+          </div>
+          <div class="timestamp">
+            <span>{{timestamp}}</span>
+          </div>
+          <div class="circle " v-for="(item, index) in datas" v-bind:key="index" v-bind:class="['position' + index,datas[index].color]">
+            <div class="textDiv">
+              <span class="temp" >{{item.temp}}<span class="miniFont">℃</span></span></br>
+              <span class="humid" >{{item.humid}}<span class="miniFont">%</span></span>
+            </div>
+          </div>
        </div>
     </div>
 </template>
@@ -21,70 +30,148 @@ export default {
     return {
       datas: [
         {
-          'value' : '24.5',
-          'color' : 'red'
+          'temp' : '',
+          'humid': '',
+          'color' :''
         },
         {
-          'value' : '',
-          'color' : ''
+          'temp' : '',
+          'humid': '',
+          'color' :''
         },
         {
-          'value' : '',
-          'color' : ''
+          'temp' : '',
+          'humid': '',
+          'color' :''
         },
         {
-          'value' : '',
-          'color' : ''
+          'temp' : '',
+          'humid': '',
+          'color' :''
         },
         {
-          'value' : '',
-          'color' : ''
+          'temp' : '',
+          'humid': '',
+          'color' :''
         },
         {
-          'value' : '',
-          'color' : ''
+          'temp' : '',
+          'humid': '',
+          'color' :''
         },
         {
-          'value' : '',
-          'color' : ''
+          'temp' : '',
+          'humid': '',
+          'color' :''
         },
         {
-          'value' : '',
-          'color' : ''
+          'temp' : '',
+          'humid': '',
+          'color' :''
         },
         {
-          'value' : '',
-          'color' : ''
+          'temp' : '',
+          'humid': '',
+          'color' :''
         },
         {
-          'value' : '',
-          'color' : ''
+          'temp' : '',
+          'humid': '',
+          'color' :''
         },
         {
-          'value' : '',
-          'color' : ''
+          'temp' : '',
+          'humid': '',
+          'color' :''
         },
         {
-          'value' : '',
-          'color' : ''
+          'temp' : '',
+          'humid': '',
+          'color' :''
         },
         {
-          'value' : '',
-          'color' : ''
+          'temp' : '',
+          'humid': '',
+          'color' :''
         },
         {
-          'value' : '',
-          'color' : ''
+          'temp' : '',
+          'humid': '',
+          'color' :''
         },{
-          'value' : '',
-          'color' : ''
+          'temp' : '',
+          'humid': '',
+          'color' :''
         },
         {
-          'value' : '',
-          'color' : ''
+          'temp' : '',
+          'humid': '',
+          'color' :''
         },
 
-      ]
+      ],
+      devicePostions : [
+        {
+          'deviceid' : '',
+          'position' : '1'
+        },
+        {
+          'deviceid' : '',
+          'position' : '2'
+        },
+        {
+          'deviceid' : '',
+          'position' : '3'
+        },
+        {
+          'deviceid' : 'EEA12C6A7C52',
+          'position' : '4'
+        },
+        {
+          'deviceid' : '',
+          'position' : '5'
+        },
+        {
+          'deviceid' : '',
+          'position' : '6'
+        },
+        {
+          'deviceid' : 'EBD012965BEB',
+          'position' : '7'
+        },
+        {
+          'deviceid' : '',
+          'position' : '8'
+        },
+        {
+          'deviceid' : '',
+          'position' : '9'
+        },
+        {
+          'deviceid' : '',
+          'position' : '11'
+        },
+        {
+          'deviceid' : '',
+          'position' : '12'
+        },
+        {
+          'deviceid' : '',
+          'position' : '13'
+        },
+        {
+          'deviceid' : '',
+          'position' : '14'
+        },
+        {
+          'deviceid' : '',
+          'position' : '15'
+        },
+      ],
+      timestamp : '',
+      media: 0,
+      alarm: 0,
+      value1: 50
     }
   },
   beforeMount () {
@@ -92,27 +179,32 @@ export default {
     this.callAjax();
     setInterval(function() {
       thisObj.callAjax();
-    }, 3000);
+    }, 300000);
   },
   updated() {
     console.log('updated');
   },
   methods:{
-    changeColor:function(index, data){
-      // this.datas.forEach(function(item,index){
-      //   if(index != 0){
-      //     var randomTemperature = Math.floor(Math.random() * 7) + 20;
-      //     var randomTemperature2 = Math.floor(Math.random() * 10) + 1;
-      //     var color = randomTemperature < 22 ?  'circle-blue' : (randomTemperature < 24 ? 'circle-green' : 'circle-red');
-      //     item.value = randomTemperature+'.'+(randomTemperature2>5?5:0);
-      //     item.color = color;
-      //   }
-      // });
-      let temperature = data.temp;
-      let color = temperature < 22 ?  'circle-blue' : (temperature < 24 ? 'circle-green' : 'circle-red');
-      this.datas[index].color = color;
-      this.datas[index].value = temperature;
+    changeColor (resdata){
+      let thisObj = this;
+      let index = 0;
+      resdata.forEach(function(data){
+        let temperature = data.temp;
+        let color = temperature < 22 ?  'circle-blue' : (temperature < 24 ? 'circle-green' : 'circle-red');
+        let index = thisObj.getDevicePosition(data.deviceid);
+        thisObj.datas[index].color = color;
+        thisObj.datas[index].temp = temperature;
+        thisObj.datas[index].humid = data.humid;
+        index++;
+      });    
     },
+    getDevicePosition (deviceId){
+      for(let i = 0; i < this.devicePostions.length; i++) {
+        if (this.devicePostions[i].deviceid == deviceId) {
+          return i;
+        }
+      }
+    },  
     callAjax () {
       const baseURI = 'https://kytz6k74cl.execute-api.us-east-1.amazonaws.com/tempapi/tempdata';
       this.$http.get(`${baseURI}`)
@@ -120,7 +212,8 @@ export default {
         console.log(result);
         let resData = result.data.body;
         console.log(resData);
-        this.changeColor(1,resData[1]);
+        this.changeColor(resData);
+        this.timestamp = resData[0].timestamp;
       })
 
     }
@@ -133,6 +226,11 @@ export default {
 
 <style lang="scss">
 
+  .timestamp{
+    position: absolute;
+    top: 10%;
+    right:0%;
+  }
 
   #main{
     border:1px solid #ddd;
@@ -190,13 +288,23 @@ export default {
       background: radial-gradient(ellipse at center, #ffffff29 29%, #2f940d 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     }
 
+
     .miniFont{
       font-size: 15px;
     }
-    .text{
-      position: absolute;
-      top: 50%;
-      left:50%;
+    .temp{
+      // position: absolute;
+      // top: 40%;
+      // left:50%;
+      transform: translate(-50%,-50%);
+      color: white;
+      font-weight: bold;
+      font-size: 1em;
+    }
+    .humid{
+      // position: absolute;
+      // top: 60%;
+      // left:50%;
       transform: translate(-50%,-50%);
       color: white;
       font-weight: bold;

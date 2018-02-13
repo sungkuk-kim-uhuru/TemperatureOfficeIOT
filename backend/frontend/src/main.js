@@ -1,10 +1,16 @@
 import Vue from 'vue'
 import Main from './components/Main.vue'
-import Vuetify from 'vuetify'
 import axios from 'axios'
+// ElementUI
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+
+// ElementUIでの言語設定、datePickerとかで適用される
+import locale from 'element-ui/lib/locale/lang/ja'
+
+Vue.use(ElementUI, {locale});
 
 var app = undefined;
-Vue.use(Vuetify);
 Vue.component('Main', Main);
 Vue.prototype.$http = axios;
 app = new Vue({
