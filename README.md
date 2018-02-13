@@ -27,7 +27,8 @@ cd backend
 npm install 
 cd frontend
 npm install
-npm run build
+npm run-script build
 cd ..
 node app.js
+localhost:3000で確認
 ```
